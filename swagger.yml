@@ -1,0 +1,159 @@
+swagger: "2.0"
+info:
+  description: This is the swagger file that goes with our server code
+  version: "1.0.0"
+  title: Swagger REST Article
+consumes:
+  - "application/json"
+produces:
+  - "application/json"
+
+basePath: "/api"
+
+paths:
+  /contacts:
+    get:
+      operationId: contacts.read_all
+      tags:
+        - contacts
+      summary: Mengambil seluruh data contact
+      description: Menampilkan seluruh data dari tabel contacts
+      responses:
+        200:
+          description: Berhasil mendapatkan data contact
+          schema:
+            type: array
+            items:
+              properties:
+                id:
+                  type: integer
+                nama:
+                  type: string
+                noHp:
+                  type: string
+                timestamp:
+                  type: string
+    post:
+      operationId: contacts.create
+      tags:
+        - contacts
+      summary: Membuat contact baru
+      description: Menambahkan contact baru ke tabel contacts
+      parameters:
+        - name: contact
+          in: body
+          description: nama contact untuk dibuat
+          required: True
+          schema:
+            type: object
+            properties:
+              nama:
+                type: string
+                description: nama orang yang akan dibuat
+              noHp:
+                type: string
+                description: data noHp yang akan dibuat
+      responses:
+        201:
+          description: berhasil menambahkan data contact
+          schema:
+            properties:
+              id:
+                type: integer
+                description: Id contact
+              nama:
+                type: string
+                description: Nama contact
+              noHp:
+                type: string
+                description: No Hp 
+              timestamp:
+                type: string
+                description: Creation/Update timestamp of the person record
+
+  /contacts/{id}:
+    get:
+      operationId: contacts.read_one
+      tags:
+        - contacts
+      summary: Mengambil satu data contact
+      description: Menampilkan satu data contact
+      parameters:
+        - name: id
+          in: path
+          description: Id dari data contact
+          type: integer
+          required: True
+      responses:
+        200:
+          description: Berhasil mengambil data dari data contacts
+          schema:
+            type: object
+            properties:
+              id:
+                type: integer
+                description: Id contact
+              nama:
+                type: string
+                description: nama contact
+              noHp:
+                type: string
+                description: noHp contact
+              timestamp:
+                type: string
+                description: Creation/Update timestamp of the person record 
+    put:
+      operationId: contacts.update
+      tags:
+        - contacts
+      summary: Update data contact
+      description: Update data contact
+      parameters:
+        - name: id
+          in: path
+          description: Id untuk di update
+          type: integer
+          required: True
+        - name: contact
+          in: body
+          schema:
+            type: object
+            properties:
+              nama:
+                type: string
+                description: nama orang yang akan di update
+              noHp:
+                type: string
+                description: no Hp orang yang akan di update
+      responses:
+        200:
+          description: Successfully updated person
+          schema:
+            properties:
+              id:
+                type: string
+                description: Id contact
+              nama:
+                type: string
+                description: nama contact
+              noHp:
+                type: string
+                description: no Hp
+              timestamp:
+                type: string
+                description: Creation/Update timestamp of the person record      
+    delete:
+      operationId: contacts.delete
+      tags:
+        - contacts
+      summary: Menghapus data contact dari daftar
+      description: Hapus data contact
+      parameters:
+        - name: id
+          in: path
+          type: integer
+          description: Id contact yang akan di delete
+          required: true
+      responses:
+        200:
+          description: Successfully deleted a person   
